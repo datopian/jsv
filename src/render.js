@@ -1,14 +1,17 @@
-// client should follow Axios's API
-async function render(client, url) {
-  let response;
+import fs from "fs";
 
-  try {
-    response = await client.get(url);
-  } catch (error) {
-    console.error(error);
-  }
+import handlebars from "handlebars";
 
-  return response.data;
+import { removeExtraEmptyLines } from "./text.js";
+
+handlebars.registerHelper("counter", (index) => index + 1);
+handlebars.registerHelper("safe", (text) => new handlebars.SafeString(text));
+
+async function toMarkDown(input) {
+  const contents = await fs.promises.readFile("./src/template.md", "utf8");
+  const template = handlebars.compile(contents);
+  const schema = JSON.parse(input);
+  return removeExtraEmptyLines(template(schema));
 }
 
-export { render };
+export { toMarkDown };

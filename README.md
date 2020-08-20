@@ -13,7 +13,20 @@ $ npm install
 $ npm link
 ```
 
-## Getting started
+## Usage
+
+### API
+
+To convert [`input.json`](test/fixtures/input.json) into [`output.md`](test/fixtures/output.md), we need to read the content of the input file pass it to the `toMarkDown` function. For example, the following function would return the contents of `output.md` when called with the contents of `input.json`:
+
+```javascript
+async function convert(path) {
+  const input = await fs.promises.readFile(path, "utf8");
+  return toMarkDown(input);
+}
+```
+
+### CLI (to be implemented)
 
 ```console
 $ jsv --help
