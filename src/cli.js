@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
-import { createRequire } from "module";
 import commander from "commander";
+import { available, engine } from "./render.js";
+import { createRequire } from "module";
 
 const require = createRequire(import.meta.url);
 const pkg = require("../package.json");
@@ -10,39 +11,37 @@ const doc = `jsv (JSON Scheme Viewer)
 JSON Schema viewer is a lightweight javascript library and tool that turns JSON
 schemas into a elegant human readable documents.
 
-It expects URL to be a location of a JSON scheme file, and it decides the
-format of the output based on the file extension of OUTPUT (which is created
-as a result) or the format provided via the --output option.`;
+It expects a JSON Schema from stdin and outputs to stdout its version for
+visualization in MarkDown, unless another format is passed using --output.`;
 
 const main = () => {
+  let stdin = "";
   const cli = commander.program;
   cli
     .version(pkg.version)
     .description(doc)
-    .arguments("<URL> <OUTPUT>")
-    .option("--output=<output>", "Format of the output file.")
-    .option(
-      "--css=<css>",
-      "URL of a CSS stylesheet (to be included in HTML outputs)."
-    )
-    .option(
-      "--embed-css",
-      "Include the contents of the CSS in the HTML output."
-    )
-    .option(
-      "--stdout",
-      "No output file is created and the result goes to stdout."
+    .arguments("[<json>]")
+    .option("-p, --output <format>", `Format of the output: ${available}`, "md")
+    .action((json, options) =>
+      engine(stdin || json, options.output)
+        .then(console.log)
+        .catch(console.error)
     );
-  cli.parse(process.argv);
 
-  // TODO download URL
-  // TODO detect output format (md|html)
-  // TODO render md
-  // TODO render html
-  // TODO render HTML with embedded CSS
-  // TODO render HTML with external CSS
-  // TODO render HTML with external CSS embbedded
-  // TODO return to stdout
+  // input is available right away
+  if (process.stdin.isTTY) {
+    cli.parse();
+    return;
+  }
+
+  // read input from pipe
+  process.stdin.on("readable", () => {
+    let chunk = process.stdin.read();
+    if (chunk !== null) {
+      stdin += chunk;
+    }
+  });
+  process.stdin.on("end", () => cli.parse());
 };
 
 main();
