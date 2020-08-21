@@ -9,8 +9,8 @@ async function readFixture(name) {
 }
 
 test("Can render a JSON schema to markdown (default)", async (t) => {
-  const input = await readFixture("input.json");
-  const expected = await readFixture("output.md");
+  const input = await readFixture("data-resource.json");
+  const expected = await readFixture("data-resource.md");
   const result = await toMarkDown(input);
   t.is(result, expected);
 });
