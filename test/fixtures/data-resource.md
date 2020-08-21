@@ -10,23 +10,14 @@ The profile of this descriptor.
 
 Every Package and Resource descriptor has a profile. The default profile, if none is declared, is `data-package` for Package and `data-resource` for Resource.
 
-### Example 1
+### Examples
 
-```json
-{
-  "profile": "tabular-data-package"
-}
+- `{"profile":"tabular-data-package"}`
+  
 
-```
-
-### Example 2
-
-```json
-{
-  "profile": "http://example.com/my-profiles-json-schema.json"
-}
-
-```
+- `{"profile":"http://example.com/my-profiles-json-schema.json"}`
+  
+  
 
 ## Name (`string`)
 
@@ -34,14 +25,11 @@ An identifier string. Lower case characters with `.`, `_`, `-` and `/` are allow
 
 This is ideally a url-usable and human-readable name. Name `SHOULD` be invariant, meaning it `SHOULD NOT` change when its parent descriptor is updated.
 
-### Example 1
+### Example
 
-```json
-{
-  "name": "my-nice-name"
-}
-
-```
+- `{"name":"my-nice-name"}`
+  
+  
 
 ## Path
 
@@ -49,38 +37,17 @@ A reference to the data for this resource, as either a path as a string, or an a
 
 The dereferenced value of each referenced data source in `path` `MUST` be commensurate with a native, dereferenced representation of the data the resource describes. For example, in a *Tabular* Data Resource, this means that the dereferenced value of `path` `MUST` be an array.
 
-### Example 1
+### Examples
 
-```json
-{
-  "path": [
-    "file.csv",
-    "file2.csv"
-  ]
-}
+- `{"path":["file.csv","file2.csv"]}`
+  
 
-```
+- `{"path":["http://example.com/file.csv","http://example.com/file2.csv"]}`
+  
 
-### Example 2
-
-```json
-{
-  "path": [
-    "http://example.com/file.csv",
-    "http://example.com/file2.csv"
-  ]
-}
-
-```
-
-### Example 3
-
-```json
-{
-  "path": "http://example.com/file.csv"
-}
-
-```
+- `{"path":"http://example.com/file.csv"}`
+  
+  
 
 ## Data
 
@@ -94,58 +61,41 @@ A schema for this resource.
 
 A human-readable title.
 
-### Example 1
+### Example
 
-```json
-{
-  "title": "My Package Title"
-}
-
-```
+- `{"title":"My Package Title"}`
+  
+  
 
 ## Description (`string`)
 
 A text description. Markdown is encouraged.
 
-### Example 1
+### Example
 
-```json
-{
-  "description": "# My Package description\nAll about my package."
-}
-
-```
+- `{"description":"# My Package description\nAll about my package."}`
+  
+  
 
 ## Home Page (`string`)
 
 The home on the web that is related to this data package.
 
-### Example 1
+### Example
 
-```json
-{
-  "homepage": "http://example.com/"
-}
-
-```
+- `{"homepage":"http://example.com/"}`
+  
+  
 
 ## Sources (`array`)
 
 The raw sources for this resource.
 
-### Example 1
+### Example
 
-```json
-{
-  "sources": [
-    {
-      "title": "World Bank and OECD",
-      "path": "http://data.worldbank.org/indicator/NY.GDP.MKTP.CD"
-    }
-  ]
-}
-
-```
+- `{"sources":[{"title":"World Bank and OECD","path":"http://data.worldbank.org/indicator/NY.GDP.MKTP.CD"}]}`
+  
+  
 
 ## Licenses (`array`)
 
@@ -153,20 +103,11 @@ The license(s) under which the resource is published.
 
 This property is not legally binding and does not guarantee that the package is licensed under the terms defined herein.
 
-### Example 1
+### Example
 
-```json
-{
-  "licenses": [
-    {
-      "name": "odc-pddl-1.0",
-      "path": "http://opendatacommons.org/licenses/pddl/",
-      "title": "Open Data Commons Public Domain Dedication and License v1.0"
-    }
-  ]
-}
-
-```
+- `{"licenses":[{"name":"odc-pddl-1.0","path":"http://opendatacommons.org/licenses/pddl/","title":"Open Data Commons Public Domain Dedication and License v1.0"}]}`
+  
+  
 
 ## Format (`string`)
 
@@ -174,27 +115,21 @@ The file format of this resource.
 
 `csv`, `xls`, `json` are examples of common formats.
 
-### Example 1
+### Example
 
-```json
-{
-  "format": "xls"
-}
-
-```
+- `{"format":"xls"}`
+  
+  
 
 ## Media Type (`string`)
 
 The media type of this resource. Can be any valid media type listed with [IANA](https://www.iana.org/assignments/media-types/media-types.xhtml).
 
-### Example 1
+### Example
 
-```json
-{
-  "mediatype": "text/csv"
-}
-
-```
+- `{"mediatype":"text/csv"}`
+  
+  
 
 ## Encoding (`string`)
 
@@ -202,46 +137,29 @@ Defaults to _utf-8_.
 
 The file encoding of this resource.
 
-### Example 1
+### Example
 
-```json
-{
-  "encoding": "utf-8"
-}
-
-```
+- `{"encoding":"utf-8"}`
+  
+  
 
 ## Bytes (`integer`)
 
 The size of this resource in bytes.
 
-### Example 1
+### Example
 
-```json
-{
-  "bytes": 2082
-}
-
-```
+- `{"bytes":2082}`
+  
+  
 
 ## Hash (`string`)
 
 The MD5 hash of this resource. Indicate other hashing algorithms with the {algorithm}:{hash} format.
 
-### Example 1
+### Examples
 
-```json
-{
-  "hash": "d25c9c77f588f5dc32059d2da1136c02"
-}
+- `{"hash":"d25c9c77f588f5dc32059d2da1136c02"}`
+  
 
-```
-
-### Example 2
-
-```json
-{
-  "hash": "SHA256:5262f12512590031bbcc9a430452bfd75c2791ad6771320bb4b5728bfb78c4d0"
-}
-
-```
+- `{"hash":"SHA256:5262f12512590031bbcc9a430452bfd75c2791ad6771320bb4b5728bfb78c4d0"}`

@@ -18,14 +18,14 @@ Defaults to _{{ property.default }}_.
 {{ property.context|safe }}
 {% endif %}
 
+{% if property.examples %}
+
+### Example{% if property.examples.length > 1 %}s{% endif %}
+
 {% for example in property.examples %}
 
-### Example {{ loop.index }}
-
-```json
-{{ example|safe }}
-```
-
-{% endfor %}
+- `{{ example|parseJson|dump|safe }}`
+  {% endfor %}
+  {% endif %}
 
 {% endfor %}
