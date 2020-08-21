@@ -1,10 +1,12 @@
-# Data Resource (`object`)
+# Data Resource
+
+**(`object`)**
 
 Data Resource.
 
-## Profile (`string`)
+## Profile
 
-Defaults to _data-resource_.
+**(`string`)** Defaults to _data-resource_.
 
 The profile of this descriptor.
 
@@ -19,7 +21,9 @@ Every Package and Resource descriptor has a profile. The default profile, if non
   
   
 
-## Name (`string`)
+## Name
+
+**(`string`)** 
 
 An identifier string. Lower case characters with `.`, `_`, `-` and `/` are allowed.
 
@@ -53,11 +57,15 @@ The dereferenced value of each referenced data source in `path` `MUST` be commen
 
 Inline data for this resource.
 
-## Schema (`object`)
+## Schema
+
+**(`object`)** 
 
 A schema for this resource.
 
-## Title (`string`)
+## Title
+
+**(`string`)** 
 
 A human-readable title.
 
@@ -67,7 +75,9 @@ A human-readable title.
   
   
 
-## Description (`string`)
+## Description
+
+**(`string`)** 
 
 A text description. Markdown is encouraged.
 
@@ -77,7 +87,9 @@ A text description. Markdown is encouraged.
   
   
 
-## Home Page (`string`)
+## Home Page
+
+**(`string`)** 
 
 The home on the web that is related to this data package.
 
@@ -87,7 +99,9 @@ The home on the web that is related to this data package.
   
   
 
-## Sources (`array`)
+## Sources
+
+**(`array`)** 
 
 The raw sources for this resource.
 
@@ -97,7 +111,9 @@ The raw sources for this resource.
   
   
 
-## Licenses (`array`)
+## Licenses
+
+**(`array`)** 
 
 The license(s) under which the resource is published.
 
@@ -109,7 +125,9 @@ This property is not legally binding and does not guarantee that the package is 
   
   
 
-## Format (`string`)
+## Format
+
+**(`string`)** 
 
 The file format of this resource.
 
@@ -121,7 +139,9 @@ The file format of this resource.
   
   
 
-## Media Type (`string`)
+## Media Type
+
+**(`string`)** 
 
 The media type of this resource. Can be any valid media type listed with [IANA](https://www.iana.org/assignments/media-types/media-types.xhtml).
 
@@ -131,9 +151,9 @@ The media type of this resource. Can be any valid media type listed with [IANA](
   
   
 
-## Encoding (`string`)
+## Encoding
 
-Defaults to _utf-8_.
+**(`string`)** Defaults to _utf-8_.
 
 The file encoding of this resource.
 
@@ -143,7 +163,9 @@ The file encoding of this resource.
   
   
 
-## Bytes (`integer`)
+## Bytes
+
+**(`integer`)** 
 
 The size of this resource in bytes.
 
@@ -153,7 +175,9 @@ The size of this resource in bytes.
   
   
 
-## Hash (`string`)
+## Hash
+
+**(`string`)** 
 
 The MD5 hash of this resource. Indicate other hashing algorithms with the {algorithm}:{hash} format.
 

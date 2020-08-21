@@ -1,14 +1,14 @@
-# {{ title }} (`{{ type }}`)
+# {{ title }}
+
+**(`{{ type }}`)**
 
 {{ description|safe }}
 
 {% for _, property in properties %}
 
-## {{ property.title }}{% if property.type %} (`{{ property.type }}`){% endif %}
+## {{ property.title }}
 
-{% if property.default %}
-Defaults to _{{ property.default }}_.
-{% endif %}
+{% if property.type %}**(`{{ property.type }}`)** {% endif %}{% if property.default %}Defaults to _{{ property.default }}_.{% endif %}
 
 {% if property.description %}
 {{ property.description }}

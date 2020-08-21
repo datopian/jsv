@@ -42,7 +42,9 @@ Options:
 
 ```console
 $ jsv '{"$schema": "http://json-schema.org/draft-04/schema#", "title": "Data Resource", "description": "Data Resource.", "type": "object"}'
-# Data Resource (`object`)
+# Data Resource
+
+**(`object`)**
 
 Data Resource.
 ```
@@ -51,30 +53,36 @@ Data Resource.
 
 ```console
 $ cat test/fixtures/data-resource.json | jsv
-# Data Resource (`object`)
+# Data Resource
+
+**(`object`)**
 
 Data Resource.
 
-## Profile (`string`)
+## Profile
 
-Defaults to _data-resource_.
+**(`string`)** Defaults to _data-resource_.
 
-[…]
+The profile of this descriptor.
+…
 ```
 
 ##### Piping from a remote file
 
 ```console
 $ curl https://specs.frictionlessdata.io/schemas/data-resource.json | jsv
-# Data Resource (`object`)
+# Data Resource
+
+**(`object`)**
 
 Data Resource.
 
-## Profile (`string`)
+## Profile
 
-Defaults to _data-resource_.
+**(`string`)** Defaults to _data-resource_.
 
-[…]
+The profile of this descriptor.
+…
 ```
 
 ### API
