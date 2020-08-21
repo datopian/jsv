@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "commander": "^6.0.0",
-    "nunjucks": "^3.2.2"
+    "nunjucks": "^3.2.2",
+    "showdown": "^1.9.1"
   }
 }

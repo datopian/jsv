@@ -18,6 +18,16 @@ test("Can render a JSON schema to MarkDown", async (t) => {
     );
 });
 
+test("Can render a JSON schema to HTML", async (t) => {
+  const input = await readFixture("data-resource.json");
+  const expected = await readFixture("data-resource.html");
+  engine(input, "html")
+    .then((result) => t.is(result, expected))
+    .catch((error) =>
+      t.Fail(`Expected to render with no errors, but got:\n${error.message}`)
+    );
+});
+
 test("Engine throws an error when JSON is invalid", async (t) => {
   const input = await readFixture("invalid.json");
   engine(input, "md")
@@ -34,7 +44,8 @@ test("Engine throws an error when output format is invalid", async (t) => {
   engine(input, "go")
     .then(() => t.Fail("Expected a output format validation error."))
     .catch((error) => {
-      const expected = "go is not a valid output format. Options are: md.";
+      const expected =
+        "go is not a valid output format. Options are: html, md.";
       const result = error.message.substr(0, expected.length);
       t.is(result, expected);
     });
