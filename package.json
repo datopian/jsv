@@ -2,7 +2,7 @@
   "name": "jsv",
   "version": "0.0.1",
   "main": "cli.js",
-  "description": "JSON Schema viewer is a lightweight javascript library and tool that turns JSON schemas into a elegant human readable documents.",
+  "description": "JSON Schema viewer is a lightweight javascript library and tool that turns JSON schemas into elegant human-readable documents.",
   "homepage": "https://github.com/datopian/jsv#readme",
   "license": "MIT",
   "type": "module",
