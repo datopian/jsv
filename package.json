@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
-    "commander": "^6.0.0"
+    "commander": "^6.0.0",
+    "handlebars": "^4.7.6"
   }
 }
