@@ -9,7 +9,7 @@ const pkg = require("../package.json");
 const doc = `jsv (JSON Scheme Viewer)
 
 JSON Schema viewer is a lightweight javascript library and tool that turns JSON
-schemas into a elegant human readable documents.
+schemas into elegant human-readable documents.
 
 It expects a JSON Schema from stdin and outputs to stdout its version for
 visualization in MarkDown, unless another format is passed using --output.`;

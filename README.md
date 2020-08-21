@@ -1,6 +1,6 @@
 # JSON Schema Viewer
 
-JSON Schema viewer is a lightweight library and tool in JavaScript to turn a [JSON Schema](https://json-schema.org/) into a nice human readable document that you publish or embed in HTML or MarkDown.
+JSON Schema viewer is a lightweight library and tool in JavaScript to turn a [JSON Schema](https://json-schema.org/) into nice human-readable documents that you publish or embed in HTML or MarkDown.
 
 It is designed for use in rendering documentation for metadata and data schemas for data management systems like [CKAN](https://github.com/ckan/ckan) — though it can be used for any JSON Schema.
 
