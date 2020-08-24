@@ -15,11 +15,8 @@ Every Package and Resource descriptor has a profile. The default profile, if non
 ### Examples
 
 - `{"profile":"tabular-data-package"}`
-  
 
 - `{"profile":"http://example.com/my-profiles-json-schema.json"}`
-  
-  
 
 ## Name
 
@@ -32,8 +29,6 @@ This is ideally a url-usable and human-readable name. Name `SHOULD` be invariant
 ### Example
 
 - `{"name":"my-nice-name"}`
-  
-  
 
 ## Path
 
@@ -44,14 +39,10 @@ The dereferenced value of each referenced data source in `path` `MUST` be commen
 ### Examples
 
 - `{"path":["file.csv","file2.csv"]}`
-  
 
 - `{"path":["http://example.com/file.csv","http://example.com/file2.csv"]}`
-  
 
 - `{"path":"http://example.com/file.csv"}`
-  
-  
 
 ## Data
 
@@ -72,8 +63,6 @@ A human-readable title.
 ### Example
 
 - `{"title":"My Package Title"}`
-  
-  
 
 ## Description
 
@@ -84,8 +73,6 @@ A text description. Markdown is encouraged.
 ### Example
 
 - `{"description":"# My Package description\nAll about my package."}`
-  
-  
 
 ## Home Page
 
@@ -96,8 +83,6 @@ The home on the web that is related to this data package.
 ### Example
 
 - `{"homepage":"http://example.com/"}`
-  
-  
 
 ## Sources
 
@@ -108,8 +93,6 @@ The raw sources for this resource.
 ### Example
 
 - `{"sources":[{"title":"World Bank and OECD","path":"http://data.worldbank.org/indicator/NY.GDP.MKTP.CD"}]}`
-  
-  
 
 ## Licenses
 
@@ -122,8 +105,6 @@ This property is not legally binding and does not guarantee that the package is 
 ### Example
 
 - `{"licenses":[{"name":"odc-pddl-1.0","path":"http://opendatacommons.org/licenses/pddl/","title":"Open Data Commons Public Domain Dedication and License v1.0"}]}`
-  
-  
 
 ## Format
 
@@ -136,8 +117,6 @@ The file format of this resource.
 ### Example
 
 - `{"format":"xls"}`
-  
-  
 
 ## Media Type
 
@@ -148,8 +127,6 @@ The media type of this resource. Can be any valid media type listed with [IANA](
 ### Example
 
 - `{"mediatype":"text/csv"}`
-  
-  
 
 ## Encoding
 
@@ -160,8 +137,6 @@ The file encoding of this resource.
 ### Example
 
 - `{"encoding":"utf-8"}`
-  
-  
 
 ## Bytes
 
@@ -172,8 +147,6 @@ The size of this resource in bytes.
 ### Example
 
 - `{"bytes":2082}`
-  
-  
 
 ## Hash
 
@@ -184,6 +157,5 @@ The MD5 hash of this resource. Indicate other hashing algorithms with the {algor
 ### Examples
 
 - `{"hash":"d25c9c77f588f5dc32059d2da1136c02"}`
-  
 
 - `{"hash":"SHA256:5262f12512590031bbcc9a430452bfd75c2791ad6771320bb4b5728bfb78c4d0"}`
