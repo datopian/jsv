@@ -1,3 +1,5 @@
+![Build](https://github.com/datopian/jsv/workflows/Build/badge.svg)
+
 # JSON Schema Viewer
 
 JSON Schema viewer is a lightweight library and tool in JavaScript to turn a [JSON Schema](https://json-schema.org/) into nice human-readable documents that you publish or embed in HTML or MarkDown.
@@ -12,11 +14,18 @@ Requires [NodeJS](https://nodejs.org/en/) 12+:
 $ npm install
 ```
 
-If you want to have `jsv` available _globally_ in your path, you can use `npm link`.
+If you want to have `jsv` available _globally_ in your path, you can use `npm link` and use it from the terminal:
 
-## Usage
+```console
+$ jsv '{"$schema": "http://json-schema.org/draft-04/schema#", "title": "Data Resource", "description": "Data Resource.", "type": "object"}'
+# Data Resource
 
-### CLI
+**(`object`)**
+
+Data Resource.
+```
+
+## CLI
 
 ```console
 $ jsv --help
@@ -36,20 +45,9 @@ Options:
   -h, --help             display help for command
 ```
 
-#### Examples
+### Examples
 
-##### Passing the JSON Schema directly
-
-```console
-$ jsv '{"$schema": "http://json-schema.org/draft-04/schema#", "title": "Data Resource", "description": "Data Resource.", "type": "object"}'
-# Data Resource
-
-**(`object`)**
-
-Data Resource.
-```
-
-##### Piping with a local file
+#### Piping with a local file
 
 ```console
 $ cat test/fixtures/data-resource.json | jsv
@@ -67,7 +65,7 @@ The profile of this descriptor.
 …
 ```
 
-##### Piping from a remote file
+#### Piping from a remote file
 
 ```console
 $ curl https://specs.frictionlessdata.io/schemas/data-resource.json | jsv
@@ -85,11 +83,11 @@ The profile of this descriptor.
 …
 ```
 
-### API
+## API
 
 The `engine` async function expects the JSON Schema and a format, both as _string_. It returns the converted contents also as _string_.
 
-#### Example
+### Example
 
 To convert a given JSON schema from a file, we need to read the content of the input file pass it to the `engine`:
 
