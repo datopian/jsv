@@ -32,7 +32,7 @@ visualization in MarkDown, unless another format is passed using --output.
 
 Options:
   -V, --version          output the version number
-  -p, --output <format>  Format of the output: md (default: "md")
+  -o, --output <format>  Format of the output: md (default: "md")
   -h, --help             display help for command
 ```
 

@@ -21,7 +21,7 @@ const main = () => {
     .version(pkg.version)
     .description(doc)
     .arguments("[<json>]")
-    .option("-p, --output <format>", `Format of the output: ${available}`, "md")
+    .option("-o, --output <format>", `Format of the output: ${available}`, "md")
     .action((json, options) =>
       engine(stdin || json, options.output)
         .then(console.log)
