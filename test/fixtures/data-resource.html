@@ -21,7 +21,25 @@
 <h2 id="path">Path</h2>
 <p>A reference to the data for this resource, as either a path as a string, or an array of paths as strings. of valid URIs.</p>
 <p>The dereferenced value of each referenced data source in <code>path</code> <code>MUST</code> be commensurate with a native, dereferenced representation of the data the resource describes. For example, in a <em>Tabular</em> Data Resource, this means that the dereferenced value of <code>path</code> <code>MUST</code> be an array.</p>
-<h3 id="examples-1">Examples</h3>
+<h3 id="validation">Validation</h3>
+<h4 id="itmustsatisfyoneoftheseconditions">It must satisfy one of these conditions</h4>
+<h5 id="path-1">Path</h5>
+<p><strong>(<code>string</code>)</strong></p>
+<p>A fully qualified URL, or a POSIX file path..</p>
+<p>Implementations need to negotiate the type of path provided, and dereference the data accordingly.</p>
+<h6 id="examples-1">Examples</h6>
+<ul>
+<li><p><code>{"path":"file.csv"}</code></p></li>
+<li><p><code>{"path":"http://example.com/file.csv"}</code></p></li>
+</ul>
+<h5 id=""> </h5>
+<p><strong>(<code>array</code>)</strong></p>
+<h6 id="examples-2">Examples</h6>
+<ul>
+<li><p><code>["file.csv"]</code></p></li>
+<li><p><code>["http://example.com/file.csv"]</code></p></li>
+</ul>
+<h3 id="examples-3">Examples</h3>
 <ul>
 <li><p><code>{"path":["file.csv","file2.csv"]}</code></p></li>
 <li><p><code>{"path":["http://example.com/file.csv","http://example.com/file2.csv"]}</code></p></li>
@@ -100,7 +118,7 @@
 <h2 id="hash">Hash</h2>
 <p><strong>(<code>string</code>)</strong></p>
 <p>The MD5 hash of this resource. Indicate other hashing algorithms with the {algorithm}:{hash} format.</p>
-<h3 id="examples-2">Examples</h3>
+<h3 id="examples-4">Examples</h3>
 <ul>
 <li><p><code>{"hash":"d25c9c77f588f5dc32059d2da1136c02"}</code></p></li>
 <li><p><code>{"hash":"SHA256:5262f12512590031bbcc9a430452bfd75c2791ad6771320bb4b5728bfb78c4d0"}</code></p></li>

@@ -36,6 +36,34 @@ A reference to the data for this resource, as either a path as a string, or an a
 
 The dereferenced value of each referenced data source in `path` `MUST` be commensurate with a native, dereferenced representation of the data the resource describes. For example, in a *Tabular* Data Resource, this means that the dereferenced value of `path` `MUST` be an array.
 
+### Validation
+
+#### It must satisfy one of these conditions
+
+##### Path
+
+**(`string`)**
+
+A fully qualified URL, or a POSIX file path..
+
+Implementations need to negotiate the type of path provided, and dereference the data accordingly.
+
+###### Examples
+
+- `{"path":"file.csv"}`
+
+- `{"path":"http://example.com/file.csv"}`
+
+#####
+
+**(`array`)**
+
+###### Examples
+
+- `["file.csv"]`
+
+- `["http://example.com/file.csv"]`
+
 ### Examples
 
 - `{"path":["file.csv","file2.csv"]}`

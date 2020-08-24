@@ -1,4 +1,5 @@
 {% import "macros.md" as macros %}
+
 # {{ title }}
 
 **(`{{ type }}`)**
