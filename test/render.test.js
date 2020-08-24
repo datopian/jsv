@@ -14,7 +14,7 @@ test("Can render a JSON schema to MarkDown", async (t) => {
   engine(input, "md")
     .then((result) => t.is(result, expected))
     .catch((error) =>
-      t.Fail(`Expected to render with no errors, but got:\n${error.message}`)
+      t.fail(`Expected to render with no errors, but got:\n${error.message}`)
     );
 });
 
@@ -24,14 +24,14 @@ test("Can render a JSON schema to HTML", async (t) => {
   engine(input, "html")
     .then((result) => t.is(result, expected))
     .catch((error) =>
-      t.Fail(`Expected to render with no errors, but got:\n${error.message}`)
+      t.fail(`Expected to render with no errors, but got:\n${error.message}`)
     );
 });
 
 test("Engine throws an error when JSON is invalid", async (t) => {
   const input = await readFixture("invalid.json");
   engine(input, "md")
-    .then(() => t.Fail("Expected JSON validation error."))
+    .then(() => t.fail("Expected JSON validation error."))
     .catch((error) => {
       const expected = "Invalid JSON input.";
       const result = error.message.substr(0, expected.length);
@@ -42,7 +42,7 @@ test("Engine throws an error when JSON is invalid", async (t) => {
 test("Engine throws an error when output format is invalid", async (t) => {
   const input = await readFixture("data-resource.json");
   engine(input, "go")
-    .then(() => t.Fail("Expected a output format validation error."))
+    .then(() => t.fail("Expected a output format validation error."))
     .catch((error) => {
       const expected =
         "go is not a valid output format. Options are: html, md.";

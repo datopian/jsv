@@ -11,7 +11,7 @@
 <li><p><code>{"profile":"http://example.com/my-profiles-json-schema.json"}</code></p></li>
 </ul>
 <h2 id="name">Name</h2>
-<p><strong>(<code>string</code>)</strong> </p>
+<p><strong>(<code>string</code>)</strong></p>
 <p>An identifier string. Lower case characters with <code>.</code>, <code>_</code>, <code>-</code> and <code>/</code> are allowed.</p>
 <p>This is ideally a url-usable and human-readable name. Name <code>SHOULD</code> be invariant, meaning it <code>SHOULD NOT</code> change when its parent descriptor is updated.</p>
 <h3 id="example">Example</h3>
@@ -30,38 +30,38 @@
 <h2 id="data">Data</h2>
 <p>Inline data for this resource.</p>
 <h2 id="schema">Schema</h2>
-<p><strong>(<code>object</code>)</strong> </p>
+<p><strong>(<code>object</code>)</strong></p>
 <p>A schema for this resource.</p>
 <h2 id="title">Title</h2>
-<p><strong>(<code>string</code>)</strong> </p>
+<p><strong>(<code>string</code>)</strong></p>
 <p>A human-readable title.</p>
 <h3 id="example-1">Example</h3>
 <ul>
 <li><code>{"title":"My Package Title"}</code></li>
 </ul>
 <h2 id="description">Description</h2>
-<p><strong>(<code>string</code>)</strong> </p>
+<p><strong>(<code>string</code>)</strong></p>
 <p>A text description. Markdown is encouraged.</p>
 <h3 id="example-2">Example</h3>
 <ul>
 <li><code>{"description":"# My Package description\nAll about my package."}</code></li>
 </ul>
 <h2 id="homepage">Home Page</h2>
-<p><strong>(<code>string</code>)</strong> </p>
+<p><strong>(<code>string</code>)</strong></p>
 <p>The home on the web that is related to this data package.</p>
 <h3 id="example-3">Example</h3>
 <ul>
 <li><code>{"homepage":"http://example.com/"}</code></li>
 </ul>
 <h2 id="sources">Sources</h2>
-<p><strong>(<code>array</code>)</strong> </p>
+<p><strong>(<code>array</code>)</strong></p>
 <p>The raw sources for this resource.</p>
 <h3 id="example-4">Example</h3>
 <ul>
 <li><code>{"sources":[{"title":"World Bank and OECD","path":"http://data.worldbank.org/indicator/NY.GDP.MKTP.CD"}]}</code></li>
 </ul>
 <h2 id="licenses">Licenses</h2>
-<p><strong>(<code>array</code>)</strong> </p>
+<p><strong>(<code>array</code>)</strong></p>
 <p>The license(s) under which the resource is published.</p>
 <p>This property is not legally binding and does not guarantee that the package is licensed under the terms defined herein.</p>
 <h3 id="example-5">Example</h3>
@@ -69,7 +69,7 @@
 <li><code>{"licenses":[{"name":"odc-pddl-1.0","path":"http://opendatacommons.org/licenses/pddl/","title":"Open Data Commons Public Domain Dedication and License v1.0"}]}</code></li>
 </ul>
 <h2 id="format">Format</h2>
-<p><strong>(<code>string</code>)</strong> </p>
+<p><strong>(<code>string</code>)</strong></p>
 <p>The file format of this resource.</p>
 <p><code>csv</code>, <code>xls</code>, <code>json</code> are examples of common formats.</p>
 <h3 id="example-6">Example</h3>
@@ -77,7 +77,7 @@
 <li><code>{"format":"xls"}</code></li>
 </ul>
 <h2 id="mediatype">Media Type</h2>
-<p><strong>(<code>string</code>)</strong> </p>
+<p><strong>(<code>string</code>)</strong></p>
 <p>The media type of this resource. Can be any valid media type listed with <a href="https://www.iana.org/assignments/media-types/media-types.xhtml">IANA</a>.</p>
 <h3 id="example-7">Example</h3>
 <ul>
@@ -91,14 +91,14 @@
 <li><code>{"encoding":"utf-8"}</code></li>
 </ul>
 <h2 id="bytes">Bytes</h2>
-<p><strong>(<code>integer</code>)</strong> </p>
+<p><strong>(<code>integer</code>)</strong></p>
 <p>The size of this resource in bytes.</p>
 <h3 id="example-9">Example</h3>
 <ul>
 <li><code>{"bytes":2082}</code></li>
 </ul>
 <h2 id="hash">Hash</h2>
-<p><strong>(<code>string</code>)</strong> </p>
+<p><strong>(<code>string</code>)</strong></p>
 <p>The MD5 hash of this resource. Indicate other hashing algorithms with the {algorithm}:{hash} format.</p>
 <h3 id="examples-2">Examples</h3>
 <ul>

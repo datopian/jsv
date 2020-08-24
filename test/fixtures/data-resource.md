@@ -20,7 +20,7 @@ Every Package and Resource descriptor has a profile. The default profile, if non
 
 ## Name
 
-**(`string`)** 
+**(`string`)**
 
 An identifier string. Lower case characters with `.`, `_`, `-` and `/` are allowed.
 
@@ -50,13 +50,13 @@ Inline data for this resource.
 
 ## Schema
 
-**(`object`)** 
+**(`object`)**
 
 A schema for this resource.
 
 ## Title
 
-**(`string`)** 
+**(`string`)**
 
 A human-readable title.
 
@@ -66,7 +66,7 @@ A human-readable title.
 
 ## Description
 
-**(`string`)** 
+**(`string`)**
 
 A text description. Markdown is encouraged.
 
@@ -76,7 +76,7 @@ A text description. Markdown is encouraged.
 
 ## Home Page
 
-**(`string`)** 
+**(`string`)**
 
 The home on the web that is related to this data package.
 
@@ -86,7 +86,7 @@ The home on the web that is related to this data package.
 
 ## Sources
 
-**(`array`)** 
+**(`array`)**
 
 The raw sources for this resource.
 
@@ -96,7 +96,7 @@ The raw sources for this resource.
 
 ## Licenses
 
-**(`array`)** 
+**(`array`)**
 
 The license(s) under which the resource is published.
 
@@ -108,7 +108,7 @@ This property is not legally binding and does not guarantee that the package is 
 
 ## Format
 
-**(`string`)** 
+**(`string`)**
 
 The file format of this resource.
 
@@ -120,7 +120,7 @@ The file format of this resource.
 
 ## Media Type
 
-**(`string`)** 
+**(`string`)**
 
 The media type of this resource. Can be any valid media type listed with [IANA](https://www.iana.org/assignments/media-types/media-types.xhtml).
 
@@ -140,7 +140,7 @@ The file encoding of this resource.
 
 ## Bytes
 
-**(`integer`)** 
+**(`integer`)**
 
 The size of this resource in bytes.
 
@@ -150,7 +150,7 @@ The size of this resource in bytes.
 
 ## Hash
 
-**(`string`)** 
+**(`string`)**
 
 The MD5 hash of this resource. Indicate other hashing algorithms with the {algorithm}:{hash} format.
 
