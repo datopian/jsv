@@ -10,47 +10,99 @@ Requires [NodeJS](https://nodejs.org/en/) 12+:
 
 ```console
 $ npm install
-$ npm link
 ```
+
+If you want to have `jsv` available _globally_ in your path, you can use `npm link`.
 
 ## Usage
 
-### API
-
-To convert [`input.json`](test/fixtures/input.json) into [`output.md`](test/fixtures/output.md), we need to read the content of the input file pass it to the `toMarkDown` function. For example, the following function would return the contents of `output.md` when called with the contents of `input.json`:
-
-```javascript
-async function convert(path) {
-  const input = await fs.promises.readFile(path, "utf8");
-  return toMarkDown(input);
-}
-```
-
-### CLI (to be implemented)
+### CLI
 
 ```console
 $ jsv --help
-Usage: jsv [options] <URL> <OUTPUT>
+Usage: jsv [options] [<json>]
 
 jsv (JSON Scheme Viewer)
 
 JSON Schema viewer is a lightweight javascript library and tool that turns JSON
 schemas into a elegant human readable documents.
 
-It expects URL to be a location of a JSON scheme file, and it decides the
-format of the output based on the file extension of OUTPUT (which is created
-as a result) or the format provided via the --output option.
+It expects a JSON Schema from stdin and outputs to stdout its version for
+visualization in MarkDown, unless another format is passed using --output.
 
 Options:
-  -V, --version      output the version number
-  --output=<output>  Format of the output file.
-  --css=<css>        URL of a CSS stylesheet (to be included in HTML outputs).
-  --embed-css        Include the contents of the CSS in the HTML output.
-  --stdout           No output file is created and the result goes to stdout.
-  -h, --help         display help for command
+  -V, --version          output the version number
+  -p, --output <format>  Format of the output: md (default: "md")
+  -h, --help             display help for command
 ```
 
-### Tests
+#### Examples
+
+##### Passing the JSON Schema directly
+
+```console
+$ jsv '{"$schema": "http://json-schema.org/draft-04/schema#", "title": "Data Resource", "description": "Data Resource.", "type": "object"}'
+# Data Resource
+
+**(`object`)**
+
+Data Resource.
+```
+
+##### Piping with a local file
+
+```console
+$ cat test/fixtures/data-resource.json | jsv
+# Data Resource
+
+**(`object`)**
+
+Data Resource.
+
+## Profile
+
+**(`string`)** Defaults to _data-resource_.
+
+The profile of this descriptor.
+…
+```
+
+##### Piping from a remote file
+
+```console
+$ curl https://specs.frictionlessdata.io/schemas/data-resource.json | jsv
+# Data Resource
+
+**(`object`)**
+
+Data Resource.
+
+## Profile
+
+**(`string`)** Defaults to _data-resource_.
+
+The profile of this descriptor.
+…
+```
+
+### API
+
+The `engine` async function expects the JSON Schema and a format, both as _string_. It returns the converted contents also as _string_.
+
+#### Example
+
+To convert a given JSON schema from a file, we need to read the content of the input file pass it to the `engine`:
+
+```javascript
+import fs from "fs";
+import { engine } from "jsv";
+
+fs.promises
+  .readFile("schema.json", "utf8")
+  .then((data) => engine(data, "md").then(console.log));
+```
+
+## Tests
 
 ```console
 $ npm test

@@ -1,30 +1,31 @@
-# {{title}} (`{{type}}`)
+# {{ title }}
 
-{{safe description}}
+**(`{{ type }}`)**
 
-{{#each properties}}
+{{ description|safe }}
 
-## {{title}}{{#if type}} (`{{type}}`){{/if}}
+{% for _, property in properties %}
 
-{{#if default}}
-Defaults to _{{default}}_.
-{{/if}}
+## {{ property.title }}
 
-{{#if description}}
-{{safe description}}
-{{/if}}
+{% if property.type %}**(`{{ property.type }}`)** {% endif %}{% if property.default %}Defaults to _{{ property.default }}_.{% endif %}
 
-{{#if context}}
-{{safe context}}
-{{/if}}
+{% if property.description %}
+{{ property.description }}
+{% endif %}
 
-{{#each examples}}
+{% if property.context %}
+{{ property.context|safe }}
+{% endif %}
 
-### Example {{counter @index}}
+{% if property.examples %}
 
-```json
-{{safe this}}
-```
+### Example{% if property.examples.length > 1 %}s{% endif %}
 
-{{/each}}
-{{/each}}
+{% for example in property.examples %}
+
+- `{{ example|parseJson|dump|safe }}`
+  {% endfor %}
+  {% endif %}
+
+{% endfor %}
