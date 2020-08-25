@@ -1,4 +1,4 @@
-import { dirname } from "path";
+import path from "path";
 import { fileURLToPath } from "url";
 
 import nunjucks from "nunjucks";
@@ -7,13 +7,15 @@ import showdown from "showdown";
 import { removeExtraEmptyLines } from "./text.js";
 
 // load converters & template engines
-const srcDir = dirname(fileURLToPath(import.meta.url));
+const srcDir = path.dirname(fileURLToPath(import.meta.url));
+const templateDir = path.join(srcDir, "templates");
 const sd = new showdown.Converter();
-const env = new nunjucks.Environment(new nunjucks.FileSystemLoader(srcDir));
+const loader = new nunjucks.FileSystemLoader(templateDir);
+const env = new nunjucks.Environment(loader);
 env.addFilter("parseJson", JSON.parse);
 
 /// basic convertion functions
-const toMarkDown = (schema) => env.render("template.md", schema);
+const toMarkDown = (schema) => env.render("base.md", schema);
 const toHtml = (schema) => sd.makeHtml(toMarkDown(schema));
 
 // helpers for the engine function below
