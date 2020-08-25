@@ -1,9 +1,8 @@
 import fs from "fs";
 
-import { removeExtraEmptyLines } from "./text.js";
-import { templateEngine, toHtml, toMarkDown } from "./engines.js";
+import { templateEngine, toHtml, toMarkDown, toPython } from "./engines.js";
 
-const engines = { html: toHtml, md: toMarkDown };
+const engines = { html: toHtml, md: toMarkDown, py: toPython };
 const available = Object.keys(engines).join(", ");
 
 // helper function to validade engine's options
@@ -39,15 +38,13 @@ const validateJson = (input) => {
 const engine = async (input, { template = null, output = null } = {}) => {
   validateOptions({ template: template, output: output });
   const schema = validateJson(input);
-  let converted = "";
 
   if (output !== null) {
-    converted = engines[output](schema);
-  } else if (template !== null) {
-    converted = templateEngine(schema, template);
+    return engines[output](schema);
   }
-
-  return removeExtraEmptyLines(converted);
+  if (template !== null) {
+    return templateEngine(schema, { template: template });
+  }
 };
 
 export { available, engine };

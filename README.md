@@ -43,7 +43,7 @@ Alternatively, a custom Jinja2/Nunjucks template can be passed using --format
 
 Options:
   -V, --version              output the version number
-  -o, --output <format>      Format of the output: html, md (default: "md")
+  -o, --output <format>      Format of the output: html, md, py (default: "md")
   -t, --template <template>  Template to use for rendering
   -h, --help                 display help for command
 ```
@@ -86,7 +86,7 @@ The profile of this descriptor.
 …
 ```
 
-#### Exporting in HTML
+#### Exporting to HTML
 
 ```console
 $ curl https://specs.frictionlessdata.io/schemas/data-resource.json | jsv --output html
@@ -96,6 +96,19 @@ $ curl https://specs.frictionlessdata.io/schemas/data-resource.json | jsv --outp
 <h2 id="profile">Profile</h2>
 <p><strong>(<code>string</code>)</strong> Defaults to <em>data-resource</em>.</p>
 <p>The profile of this descriptor.</p>
+…
+```
+
+#### Exporting to Python
+
+```console
+$ curl https://specs.frictionlessdata.io/schemas/data-resource.json | jsv --output py
+dataset_metadata = {
+    "profile": "data-resource",  # The profile of this descriptor.
+    # [example] "profile": "tabular-data-package"
+    # [example] "profile": "http://example.com/my-profiles-json-schema.json"
+    "name": "my-nice-name",  # An identifier string. Lower case characters with `.`, `_`, `-` and `/` are allowed.
+    "path": ["file.csv","file2.csv"],  # A reference to the data for this resource, as either a path as a string, or an array of paths as strings. of valid URIs.
 …
 ```
 
@@ -114,6 +127,8 @@ $ jsv --template custom.md '{"title": "Data Resource", "type": "object"}'
 **Data Resource** `object`
 ```
 
+Check the [custom templates section](#custom-templates) for more details.
+
 ## API
 
 The `engine` async function expects the JSON Schema and a format, both as _string_. It returns the converted contents also as _string_.
@@ -130,6 +145,70 @@ fs.promises
   .readFile("schema.json", "utf8")
   .then((data) => engine(data, { output: "md" }).then(console.log));
 ```
+
+Also you can use a [custom template](#custom-templates):
+
+```javascript
+engine(data, { template: "path/to/custom/template.r" });
+```
+
+## Custom templates
+
+`jsv` accepts custom templates processed by [Nunjucks](https://mozilla.github.io/nunjucks/) (a JavaScript port of [Jinja](https://jinja.palletsprojects.com/)). In additional to its natives filters, `jsv` added a couple of extra ones for better dealing with JSON Schema:
+
+### `cleanExample`
+
+The `examples` in JSON Schemas are a list of strings containing the key of that instance and an example of its possible value. This filter extracts just the value.
+
+For example, given `obj = { "example": 42 }`, `{{ obj|cleanExample }}` prints `42`.
+
+### `getDefault`
+
+This filter takes a JSON Schema _instance_ and try to gets its default value for visualization purposes:
+
+- If a default is given in the schema, this is the output
+
+- If there's no default, it tries to return the value of the first example
+
+- Otherwise, it returns `null`
+
+For example, given:
+
+```javascript
+a = { default: 42 };
+b = { examples: ['{ "answer": 42 }', '{ "answer": 21 }'] };
+c = {};
+```
+
+Then `{{ a|getDefault }}, {{ b|getDefault }}, {{ c|getDefault }}` prints `42, 42, null`
+
+### `getDescription`
+
+This filter takes a JSON Schema _instance_ and try to gets its description for visualization purposes:
+
+- If a description is given in the schema, this is the output
+
+- If there's no description, it tries to return the title instead
+
+- Otherwise, it returns `null`
+
+For example, given:
+
+```javascript
+a = { description: "42" };
+b = { name: "42" };
+c = {};
+```
+
+Then `{{ a|getDefault }}, {{ b|getDefault }}, {{ c|getDefault }}` prints `"42", "42", null`
+
+### `parseJson`
+
+A shorcut to JavaScript's native `JSON.parse`. Useful to parse strings that contains JSON data, as in the examples of JSON Schema, for instance.
+
+### `stringify`
+
+A shorcut to JavaScript's native `JSON.stringify`. Useful to parse JavaScript objects as strings in a template..
 
 ## Tests
 

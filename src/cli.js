@@ -18,8 +18,8 @@ Alternatively, a custom Jinja2/Nunjucks template can be passed using --format
 
 const run = (input, options) => {
   // if template was provided, clean up the default output
-  if (options.template !== null) {
-    options.output = null;
+  if (options.template !== undefined) {
+    options.output = undefined;
   }
   engine(input, options).then(console.log).catch(console.error);
 };
