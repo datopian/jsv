@@ -1,9 +1,26 @@
-function removeExtraEmptyLines(text) {
+const rtrim = (text) => text.replace(/\s+$/, "");
+
+const removeEmptyLines = (text) => {
   const lines = text.split("\n");
   const cleaned = [];
 
   for (let idx = 0; idx < lines.length; idx++) {
-    let line = lines[idx].trim();
+    let line = rtrim(lines[idx]);
+    if (line == "") {
+      continue; // skip empty lines
+    }
+    cleaned.push(line);
+  }
+
+  return cleaned.join("\n").trim() + "\n";
+};
+
+const removeExtraEmptyLines = (text) => {
+  const lines = text.split("\n");
+  const cleaned = [];
+
+  for (let idx = 0; idx < lines.length; idx++) {
+    let line = rtrim(lines[idx]);
     let previous = cleaned[cleaned.length - 1] || "";
 
     if (line == "" && previous == "") {
@@ -13,6 +30,6 @@ function removeExtraEmptyLines(text) {
   }
 
   return cleaned.join("\n").trim() + "\n";
-}
+};
 
-export { removeExtraEmptyLines };
+export { removeEmptyLines, removeExtraEmptyLines };

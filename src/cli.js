@@ -12,7 +12,17 @@ JSON Schema viewer is a lightweight javascript library and tool that turns JSON
 schemas into elegant human-readable documents.
 
 It expects a JSON Schema from stdin and outputs to stdout its version for
-visualization in MarkDown, unless another format is passed using --output.`;
+visualization in MarkDown, unless another format is passed using --output.
+Alternatively, a custom Jinja2/Nunjucks template can be passed using --format
+(if --format is used, --output is ignored).`;
+
+const run = (input, options) => {
+  // if template was provided, clean up the default output
+  if (options.template !== undefined) {
+    options.output = undefined;
+  }
+  engine(input, options).then(console.log).catch(console.error);
+};
 
 const main = () => {
   let stdin = "";
@@ -22,11 +32,8 @@ const main = () => {
     .description(doc)
     .arguments("[<json>]")
     .option("-o, --output <format>", `Format of the output: ${available}`, "md")
-    .action((json, options) =>
-      engine(stdin || json, options.output)
-        .then(console.log)
-        .catch(console.error)
-    );
+    .option("-t, --template <template>", "Template to use for rendering")
+    .action((json, options) => run(stdin || json, options));
 
   // input is available right away
   if (process.stdin.isTTY) {

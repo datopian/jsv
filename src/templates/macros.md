@@ -1,6 +1,8 @@
 {% macro instance(property, level=2) %}
 
+{% if property.title %}
 {{ "#".repeat(level) }} {{ property.title }}
+{% endif %}
 
 {% if property.type %}**(`{{ property.type }}`)**{% endif %}{% if property.default %} Defaults to _{{ property.default }}_.{% endif %}
 

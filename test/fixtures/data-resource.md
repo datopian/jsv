@@ -54,8 +54,6 @@ Implementations need to negotiate the type of path provided, and dereference the
 
 - `{"path":"http://example.com/file.csv"}`
 
-#####
-
 **(`array`)**
 
 ###### Examples
