@@ -36,15 +36,18 @@ jsv (JSON Scheme Viewer)
 JSON Schema viewer is a lightweight javascript library and tool that turns JSON
 schemas into elegant human-readable documents.
 
-It expects a JSON Schema from stdin and outputs to stdout its version for
-visualization in MarkDown, unless another format is passed using --output.
-Alternatively, a custom Jinja2/Nunjucks template can be passed using --format
-(if --format is used, --output is ignored).
+It expects a JSON or CKAN Schema from stdin (defaults to JSON Schema) and
+outputs to stdout its version for visualization in MarkDown (unless another
+format is passed using --output). Alternatively, a custom Jinja2/Nunjucks
+template can be passed using --template.
 
 Options:
   -V, --version              output the version number
-  -o, --output <format>      Format of the output: html, md, py (default: "md")
-  -t, --template <template>  Template to use for rendering
+  -i, --input <format>       Format of the input: json for JSON Schema, ckan
+                             for CKAN Schema (default: "json")
+  -o, --output <format>      Format of the output: html, json, md, py (default:
+                             "md")
+  -t, --template <template>  Template to use for rendering (overrides --output)
   -h, --help                 display help for command
 ```
 
@@ -112,6 +115,37 @@ dataset_metadata = {
 …
 ```
 
+#### Reading from a CKAN Schema input
+
+```console
+$ cat test/fixtures/ckan-schema.json | jsv --input ckan
+# BMGF&#39;s special metadatas
+
+**(`object`)**
+
+## Title
+
+**(`string`)**
+
+…
+```
+
+#### Converting from CKAN Schema to JSON Schema
+
+```console
+$ cat test/fixtures/ckan-schema.json | jsv --input ckan --output json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BMGF's special metadatas",
+  "type": "object",
+  "properties": {
+    "title": {
+      "title": "Title",
+      "type": "string",
+      "propertyOrder": 1,
+…
+```
+
 #### Using a custom template
 
 For example, having this `custom.md` template:
@@ -133,7 +167,7 @@ Check the [custom templates section](#custom-templates) for more details.
 
 The `engine` async function expects the JSON Schema and a format, both as _string_. It returns the converted contents also as _string_.
 
-### Example
+### Examples
 
 To convert a given JSON schema from a file, we need to read the content of the input file pass it to the `engine`:
 
@@ -143,13 +177,21 @@ import { engine } from "jsv";
 
 fs.promises
   .readFile("schema.json", "utf8")
-  .then((data) => engine(data, { output: "md" }).then(console.log));
+  .then((data) =>
+    engine(data, { input: "json", output: "md" }).then(console.log)
+  );
 ```
 
 Also you can use a [custom template](#custom-templates):
 
 ```javascript
 engine(data, { template: "path/to/custom/template.r" });
+```
+
+And convert from CKAN to JSON Schema on the fly:
+
+```javascript
+engine(data, { input: "ckan", output: "json" }).then(console.log);
 ```
 
 ## Custom templates

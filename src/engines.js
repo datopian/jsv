@@ -3,6 +3,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 import nunjucks from "nunjucks";
+import prettier from "prettier";
 import showdown from "showdown";
 
 import { cleanExample, getDefault, getDescription } from "../src/filters.js";
@@ -69,5 +70,7 @@ const md2html = (md) => {
 const toMarkDown = (schema) => templateEngine(schema);
 const toHtml = (schema) => templateEngine(schema, { postRender: md2html });
 const toPython = (schema) => templateEngine(schema, { output: "py" });
+const toJson = (schema) =>
+  prettier.format(JSON.stringify(schema), { parser: "json" });
 
-export { templateEngine, toHtml, toMarkDown, toPython };
+export { templateEngine, toHtml, toJson, toMarkDown, toPython };

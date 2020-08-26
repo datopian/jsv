@@ -11,17 +11,17 @@ const doc = `jsv (JSON Scheme Viewer)
 JSON Schema viewer is a lightweight javascript library and tool that turns JSON
 schemas into elegant human-readable documents.
 
-It expects a JSON Schema from stdin and outputs to stdout its version for
-visualization in MarkDown, unless another format is passed using --output.
-Alternatively, a custom Jinja2/Nunjucks template can be passed using --format
-(if --format is used, --output is ignored).`;
+It expects a JSON or CKAN Schema from stdin (defaults to JSON Schema) and
+outputs to stdout its version for visualization in MarkDown (unless another
+format is passed using --output). Alternatively, a custom Jinja2/Nunjucks
+template can be passed using --template.`;
 
-const run = (input, options) => {
+const run = (json, options) => {
   // if template was provided, clean up the default output
   if (options.template !== undefined) {
     options.output = undefined;
   }
-  engine(input, options).then(console.log).catch(console.error);
+  engine(json, options).then(console.log).catch(console.error);
 };
 
 const main = () => {
@@ -31,8 +31,16 @@ const main = () => {
     .version(pkg.version)
     .description(doc)
     .arguments("[<json>]")
+    .option(
+      "-i, --input <format>",
+      "Format of the input: json for JSON Schema, ckan for CKAN Schema",
+      "json"
+    )
     .option("-o, --output <format>", `Format of the output: ${available}`, "md")
-    .option("-t, --template <template>", "Template to use for rendering")
+    .option(
+      "-t, --template <template>",
+      "Template to use for rendering (overrides --output)"
+    )
     .action((json, options) => run(stdin || json, options));
 
   // input is available right away

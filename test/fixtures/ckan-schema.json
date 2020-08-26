@@ -1,0 +1,579 @@
+{
+    "scheming_version": 1,
+    "dataset_type": "dataset",
+    "about": "BMGF's special metadatas",
+    "about_url": "http://github.com/ckan/ckanext-scheming",
+    "dataset_fields": [
+      {
+        "section": "Basic Metadata",
+        "field_name": "title",
+        "label": "Title",
+        "preset": "title",
+        "validators": "if_empty_same_as(name) unicode",
+        "form_placeholder": "A descriptive title",
+        "form_snippet": "text.html",
+        "form_attrs": {
+          "data-module": "slug-preview-target",
+          "class": "form-control harvest-field"
+        },
+        "help_text": "A descriptive name given to the Dataset. This should be an intuitive labelling of the Dataset for search, sharing and linking."
+      },
+      {
+        "field_name": "name",
+        "label": "URL",
+        "preset": "dataset_slug",
+        "form_placeholder": "my-dataset",
+        "required": true
+      },
+      {
+        "field_name": "notes",
+        "label": "Description",
+        "form_snippet": "markdown.html",
+        "form_placeholder": "Some useful notes about the data",
+        "form_attrs": {
+          "class": "form-control harvest-field"
+        },
+        "validators": "not_empty",
+        "required": true
+      },
+      {
+        "field_name": "tag_string",
+        "label": "Tags",
+        "preset": "tag_string_autocomplete",
+        "form_placeholder": "Population estimates, disease burden, etc",
+        "form_attrs": {
+          "data-module": "autocomplete",
+          "data-module-tags": "",
+          "data-module-source": "/api/2/util/tag/autocomplete?incomplete=?",
+          "class": "form-control harvest-field"
+        },
+        "help_text": "What labels the Dataset in question belongs to. Tags also allow for browsing between similarly tagged Datasets in addition to enabling better discoverability through tag search."
+      },
+      {
+        "field_name": "license_id",
+        "label": "License",
+        "validators": "not_empty gdx_license_validator",
+        "form_snippet": "license.html",
+        "help_text": "Licenses makes it clear to users whether they have the rights to use, change and re-distribute the data. Definitions and additional information can be found at <a href=\"http://opendefinition.org/\" target=\"opendefinition.org\">http://opendefinition.org/</a>.",
+        "required": true
+      },
+      {
+        "field_name": "owner_org",
+        "label": "Organization",
+        "validators": "ignore_missing gdx_owner_org_validator unicode",
+        "preset": "dataset_organization",
+        "required": true,
+        "help_text": "The Team to which the Dataset belongs."
+      },
+      {
+        "field_name": "information_classification",
+        "label": "Information classification",
+        "validators": "not_empty",
+        "preset": "select",
+        "form_placeholder": "Choose one",
+        "option_help": true,
+        "help_text": "BMGF <a href=\"https://bmgf.sharepoint.com/:w:/r/sites/AzureCoP/_layouts/15/Doc.aspx?sourcedoc=%7BFFAA18FA-5297-45BE-B083-05BA6F5E925E%7D&file=Governance%20and%20Security%20-%20Information%20Classification%20Standard.docx&action=default&mobileredirect=true\" target=\"bmgf_pii\">Information Classification Standard</a>.",
+        "required": true,
+        "choices": [
+          {
+            "value": "public-public-external",
+            "label": "Public / Publicly-available Information / External",
+            "help_text": "Third party information that is legally available to the public or foundation information that is, or will be made, available to the public."
+          },
+          {
+            "value": "not_sensitive-non_confidential-internal-business",
+            "label": "Not Sensitive / Non-confidential Information / Internal / Business Decision",
+            "help_text": "Certain third-party information (e.g., work-related contact information) or foundation information (e.g., non-sensitive communications, policies, guidance documents, etc.) not available to the public or intended to be made available to the public but for which disclosure presents little to no risk."
+          },
+          {
+            "value": "not_sensitive-non_confidential-internal_limited_external-business",
+            "label": "Not Sensitive / Non-confidential Information / Internal and Limited External / Business Decision",
+            "help_text": "Certain foundation and third-party information intended to be shared between, and/or co-developed with, the third party (e.g., grantee or vendor)."
+          },
+          {
+            "value": "sensitive-confidential-internal_restricted-business",
+            "label": "Sensitive / Confidential Foundation Information / Internal - Restricted / Business Decision",
+            "help_text": "Certain foundation information (e.g., sensitive communications, ELT travel plans, GPA/Communication strategies, partner assessments, information, polices, guidance documents, etc.)."
+          },
+          {
+            "value": "sensitive-confidential_third_party-internal_restricted-agreement",
+            "label": "Sensitive / Confidential third-party information / Internal - Restricted / Agreement",
+            "help_text": "Certain third-party information disclosed pursuant to an NDA (e.g., vendor rates, costing information)."
+          },
+          {
+            "value": "sensitive-regulated-internal_restricted-regulation",
+            "label": "Sensitive / Regulated information / Internal - Restricted / Regulation",
+            "help_text": "Information protected by law/regulation (e.g., personal contact information)."
+          },
+          {
+            "value": "very_sensitive-highly_regulated-internal_highly_restricted-regulation",
+            "label": "Very Sensitive / Highly Regulated Information / Internal - Highly Restricted / Regulation",
+            "help_text": "Information protected by law/regulation (e.g., PHI, Student Records, Material Non-Public Information with high risk resulting from noncompliance or unauthorized disclosure). "
+          }
+        ]
+      },
+      {
+        "field_name": "visibility",
+        "label": "Visibility",
+        "validators": "not_missing visibility_validator",
+        "preset": "select",
+        "display_snippet": null,
+        "form_placeholder": "Choose one",
+        "form_attrs": {
+          "class": "form-control harvest-field"
+        },
+        "required": true,
+        "option_help": true,
+        "help_text": "The accessibility setting for the Dataset’s Resources, users can choose between the following: </br> <ul><li><b>Public</b>: Dataset’s Resources can be accessed by all users within the Foundation.</li><li><b>Restricted:</b> Restricted Datasets are visible to all foundation Users but can only be Explored (previewed or downloaded) by Members of the Team that the Dataset is associated with or Users that are Collaborators of the Dataset.</li></ul>",
+        "choices": [
+          {
+            "value": "restricted",
+            "label": "Restricted",
+            "help_text": "Restricted Datasets are visible to all foundation Users but can only be Explored (previewed or downloaded) by Members of the Team that the Dataset is associated with or Users that are Collaborators of the Dataset."
+          },
+          {
+            "value": "public",
+            "label": "Public",
+            "help_text": "Public Datasets are visible and can be Explored (previewed and downloaded) by all foundation Users."
+          }
+        ]
+      },
+      {
+        "field_name": "private",
+        "label": "Visibility (Private/Public)",
+        "validators": "always_false_if_not_sysadmin",
+        "form_snippet": null,
+        "display_snippet": null,
+        "help_text": "HELP TEXT FOR VISIBILITY"
+      },
+      {
+        "field_name": "maintainer",
+        "label": "Maintainer",
+        "validators": "not_empty gdx_maintainer_validator",
+        "form_snippet": "maintainer.html",
+        "form_placeholder": "John Doe",
+        "display_property": "dc:contributor",
+        "display_snippet": null,
+        "required": true,
+        "help_text": "The individual responsible for maintaining the Dataset."
+      },
+      {
+        "field_name": "maintainer_email",
+        "label": "Maintainer",
+        "validators": "gdx_maintainer_email_validator",
+        "form_snippet": null,
+        "form_placeholder": "john.doe@gatesfoundation.org",
+        "display_property": "dc:contributor",
+        "display_snippet": "maintainer_email.html",
+        "display_email_name_field": "maintainer",
+        "required": true
+      },
+      {
+        "field_name": "publisher",
+        "label": "Publisher",
+        "validators": "not_empty",
+        "form_placeholder": "Who, John Doe, etc",
+        "required": true,
+        "help_text": "An entity responsible for making the Dataset available. Examples of a Publisher include a person, an organization, or a service."
+      },
+      {
+        "field_name": "temporal_coverage",
+        "validators": "ignore_missing",
+        "label": "Temporal coverage",
+        "form_placeholder": "Year 2018",
+        "help_text": "The temporal topic of the Dataset. Temporal topic may be a named period, date, or date range."
+      },
+      {
+        "field_name": "geographic_coverage",
+        "validators": "ignore_missing",
+        "label": "Geographic coverage",
+        "form_placeholder": "tag#1, tag#2",
+        "preset": "tag_string_autocomplete",
+        "display_snippet": "list_items.html",
+        "vocabulary": "geographic_coverages",
+        "help_text": "Geographical area where data was collected or place which is the subject of a collection, or a location which is the focus of the Dataset."
+      },
+      {
+        "field_name": "geographic_level",
+        "label": "Geographic level",
+        "validators": "not_empty",
+        "preset": "select",
+        "form_placeholder": "Choose one",
+        "required": true,
+        "help_text": "The lowest level-of-detail/granularity of the Dataset along the geographic dimension.",
+        "choices": [
+          {
+            "value": "global",
+            "label": "Global"
+          },
+          {
+            "value": "regional",
+            "label": "Regional"
+          },
+          {
+            "value": "national",
+            "label": "National"
+          },
+          {
+            "value": "sub_national",
+            "label": "Sub-National"
+          },
+          {
+            "value": "other",
+            "label": "Other"
+          }
+        ]
+      },
+      {
+        "field_name": "language",
+        "label": "Language",
+        "preset": "tag_string_autocomplete",
+        "display_snippet": "list_items.html",
+        "vocabulary": "languages",
+        "help_text": "The language(s) of the Dataset."
+      },
+      {
+        "field_name": "url",
+        "label": "Source",
+        "form_placeholder": "http://example.com/dataset.json",
+        "display_property": "foaf:homepage",
+        "display_snippet": "link_if_url.html",
+        "help_text": "A related resource from which the described Dataset is derived. An example could be the website or a link to another Dataset/Resource."
+      },
+      {
+        "field_name": "dataset_type",
+        "label": "Type",
+        "preset": "select",
+        "form_placeholder": "Choose one",
+        "help_text": "The nature or genre of the Dataset. Users can choose between the following:</br> <ul><li><b>Survey:</b> An investigation about the characteristics of a given population by means of collecting data from a sample of that population.</li><li><b>Indicator: </b>Data that represents the measurement of something (e.g., GDP, Vaccination Rates).</li><li><b>Raw data:</b> Data coming directly from original data source or partner. Does not include any transformation.</li><li><b>Reference data:</b> A standard set of curated data that serve as the foundation for the IPM model.</li><li><b>Modeled Estimates:</b> Results that are outputs of a specific model.</li><li><b>Geospatial: </b>A spatial dataset or service.</li><li><b>Other:</b> Data that does not align with the other definitions.</li></ul>",
+        "choices": [
+          {
+            "value": "survey",
+            "label": "Survey"
+          },
+          {
+            "value": "indicator",
+            "label": "Indicator"
+          },
+          {
+            "value": "raw_data",
+            "label": "Raw data"
+          },
+          {
+            "value": "reference_data",
+            "label": "Reference data"
+          },
+          {
+            "value": "modeled_estimates",
+            "label": "Modeled estimates"
+          },
+          {
+            "value": "geospatial",
+            "label": "Geospatial"
+          },
+
+          {
+            "value": "other",
+            "label": "Other"
+          }
+        ]
+      },
+      {
+        "field_name": "version",
+        "label": "Version",
+        "validators": "ignore_missing gdx_version",
+        "form_placeholder": "1.0"
+      },
+      {
+        "field_name": "methodology",
+        "label": "Methodology",
+        "form_snippet": "markdown.html",
+        "display_snippet": null,
+        "form_placeholder": "Some useful notes about the methodology",
+        "help_text": "Methodology of how data was collected, created and/or any transformations performed on the data."
+      },
+      {
+        "field_name": "dataset_date",
+        "validators": "ignore_missing gdx_date",
+        "label": "Date of dataset",
+        "form_placeholder": "24/01/2018",
+        "form_attrs": {
+          "class": "form-control harvest-field"
+        },
+        "preset": "date",
+        "help_text": "Date that the Dataset was created (not uploaded). Format is mm/dd/yyyy."
+      },
+      {
+        "field_name": "expected_refresh_date",
+        "label": "Expected date of next refresh",
+        "validators": "ignore_missing gdx_date",
+        "form_placeholder": "24/01/2018",
+        "preset": "date"
+      },
+      {
+        "field_name": "expected_update_frequency",
+        "label": "Expected update frequency",
+        "preset": "select",
+        "form_placeholder": "Choose one",
+        "choices": [
+          {
+            "value": "weekly",
+            "label": "Weekly"
+          },
+          {
+            "value": "monthly",
+            "label": "Monthly"
+          },
+          {
+            "value": "semi_annually",
+            "label": "Semi-Annually"
+          },
+          {
+            "value": "annually",
+            "label": "Annually"
+          },
+          {
+            "value": "ad_hoc",
+            "label": "Ad-hoc"
+          },
+          {
+            "value": "other",
+            "label": "Other"
+          }
+        ]
+      },
+      {
+        "field_name": "usage_notes",
+        "label": "Usage notes",
+        "form_snippet": "markdown.html",
+        "display_snippet": null,
+        "form_placeholder": "Some usage notes...",
+        "form_attrs": {
+          "class": "form-control harvest-field"
+        },
+        "help_text": "Specific usage instructions on how the data in this Dataset should be used, any known issues with the data, and/or any other information that a user of the data might find helpful."
+      },
+      {
+        "field_name": "investment_id",
+        "validators": "ignore_missing",
+        "label": "Investment ID",
+        "preset": "tag_string_autocomplete",
+        "display_snippet": "list_items.html",
+        "vocabulary": "investment_ids",
+        "help_text": "Used to store unique source system identifiers that come from a past, present or future investment system (e.g. opp1234)."
+      },
+      {
+        "field_name": "internal_contact_point",
+        "validators": "ignore_missing",
+        "label": "Internal point of contact",
+        "form_placeholder": "John Doe",
+        "help_text": "Primary point of contact within the Foundation for the Dataset."
+      },
+      {
+        "field_name": "locked",
+        "validators": "boolean_validator gdx_team_admin_or_sysadmin_validator",
+        "output_validators": "boolean_validator",
+        "label": "Locked",
+        "default": true,
+        "display_snippet": null,
+        "form_snippet": null
+      },
+      {
+        "section": "Data Privacy and Sharing",
+        "section_subtitle": "Only applies to data that is uploaded to the Gates Data Exchange",
+        "field_name": "data_privacy_regulated",
+        "label": "Contains Personal Data?",
+        "validators": "boolean_validator gdx_always_false",
+        "output_validators": "boolean_validator",
+        "preset": "select",
+        "classes": ["control-medium"],
+        "form_attrs": {"data-module": "privacy-fields", "class": "form-control", "disabled": "disabled"},
+        "required": true,
+        "display_snippet": "boolean_yes_no.html",
+        "help_text": "Personal data is not currently supported in the Gates Data Exchange",
+        "choices": [
+          {
+            "value": "false",
+            "label": "No"
+          }
+        ]
+      },
+      {
+        "field_name": "data_privacy_country",
+        "label": "Country of Origin",
+        "preset": "multiple_select",
+        "select_size": 10,
+        "classes": ["control-medium", "label4"],
+        "validators": "gdx_not_missing_if_privacy_regulated gdx_country_code gdx_dump_json",
+        "output_validators": "scheming_load_json",
+        "form_placeholder": "Choose one",
+        "choices_helper": "gdx_get_privacy_countries",
+        "help_text": "Multiple values are allowed. Use Ctrl + Click to select or de-select multiple values.",
+        "required": true
+      },
+      {
+        "field_name": "data_privacy_state",
+        "label": "US State of Origin",
+        "preset": "multiple_select",
+        "select_size": 10,
+        "classes": ["control-medium", "label4"],
+        "validators": "gdx_not_missing_if_usa gdx_us_state_code gdx_dump_json",
+        "output_validators": "scheming_load_json",
+        "form_placeholder": "Choose one",
+        "choices_helper": "gdx_get_privacy_states",
+        "help_text": "Multiple values are allowed. Use Ctrl + Click to select or de-select multiple values.",
+        "required": true
+      },
+      {
+        "field_name": "data_privacy_province",
+        "label": "Canada Province of Origin",
+        "preset": "multiple_select",
+        "select_size": 10,
+        "classes": ["control-medium", "label4"],
+        "validators": "gdx_not_missing_if_canada gdx_canada_province_code gdx_dump_json",
+        "output_validators": "scheming_load_json",
+        "form_placeholder": "Choose one",
+        "choices_helper": "gdx_get_privacy_provinces",
+        "help_text": "Multiple values are allowed. Use Ctrl + Click to select or de-select multiple values.",
+        "required": true
+      },
+      {
+        "field_name": "data_sharing_agreement",
+        "label": "Data Sharing Agreement URL",
+        "classes": ["control-medium"],
+        "input_type": "url",
+        "display_snippet": "link.html"
+      },
+      {
+        "field_name": "data_expiration_date",
+        "label": "Data Expiration Date",
+        "form_placeholder": "24/01/2018",
+        "classes": ["control-medium"],
+        "preset": "date",
+        "help_text": "Format is mm/dd/yyyy"
+      },
+      {
+          "field_name": "guid",
+          "label": "Remote dataset id",
+          "form_snippet": "hidden.html",
+          "display_snippet": null
+      },
+      {
+          "field_name": "harvest_source_id",
+          "label": "Harvest source id",
+          "form_snippet": "hidden.html",
+          "display_snippet": null
+      },
+      {
+          "field_name": "harvest_source_url",
+          "label": "Harvest source url",
+          "form_snippet": "hidden.html",
+          "display_snippet": null
+      },
+      {
+          "field_name": "harvest_source_title",
+          "label": "Harvest source title",
+          "form_snippet": "hidden.html",
+          "display_snippet": null
+      },
+      {
+          "field_name": "harvest_timestamp",
+          "label": "Harvest timestamp",
+          "form_snippet": "hidden.html",
+          "display_snippet": null
+      }
+    ],
+    "resource_fields": [
+      {
+        "field_name": "url",
+        "label": "URL",
+        "preset": "resource_url_upload",
+        "validators": "gdx_upload_and_url_not_empty"
+      },
+      {
+        "field_name": "name",
+        "label": "Name",
+        "form_placeholder": "eg. January 2011 Gold Prices"
+      },
+      {
+        "field_name": "description",
+        "label": "Description",
+        "form_snippet": "markdown.html",
+        "form_placeholder": "Some useful notes about the data"
+      },
+      {
+        "field_name": "format",
+        "label": "Format",
+        "preset": "resource_format_autocomplete"
+      },
+      {
+        "field_name": "file_encoding_type",
+        "label": "File Encoding Type",
+        "preset": "select",
+        "validators": "ignore_missing",
+        "form_placeholder": "Choose one",
+        "choices": [
+          {
+            "value": "utf_8",
+            "label": "UTF-8"
+          },
+          {
+            "value": "iso_8859_1",
+            "label": "ISO-8859-1"
+          },
+          {
+            "value": "windows_1251",
+            "label": "Windows-1251"
+          },
+          {
+            "value": "windows_1252",
+            "label": "Windows-1252"
+          },
+          {
+            "value": "shift_jis",
+            "label": "Shift JIS"
+          },
+          {
+            "value": "gb2312",
+            "label": "GB2312"
+          },
+          {
+            "value": "euc_kr",
+            "label": "EUC-KR"
+          },
+          {
+            "value": "iso_8859_2",
+            "label": "ISO-8859-2"
+          },
+          {
+            "value": "windows_1250",
+            "label": "Windows-1250"
+          },
+          {
+            "value": "euc_jp",
+            "label": "EUC-JP"
+          },
+          {
+            "value": "gbk",
+            "label": "GBK"
+          },
+          {
+            "value": "big5",
+            "label": "Big5"
+          },
+          {
+            "value": "iso_8859_15",
+            "label": "ISO-8859-15"
+          },
+          {
+            "value": "windows_1256",
+            "label": "Windows-1256"
+          },
+          {
+            "value": "iso_8859_9",
+            "label": "ISO-8859-9"
+          }
+        ]
+      }
+    ]
+  }
