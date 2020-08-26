@@ -35,13 +35,21 @@ const validateJson = (input) => {
 };
 
 // helper function to switch between different rendering engines/formats
-const engine = async (input, { template = null, output = null } = {}) => {
+const engine = async (
+  input = null,
+  { template = null, output = null, file = null } = {}
+) => {
   validateOptions({ template: template, output: output });
+
+  if (file !== null && fs.existsSync(file)) {
+    input = fs.readFileSync(file);
+  }
   const schema = validateJson(input);
 
   if (output !== null) {
     return engines[output](schema);
   }
+
   if (template !== null) {
     return templateEngine(schema, { template: template });
   }
