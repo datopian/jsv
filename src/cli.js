@@ -11,8 +11,10 @@ const doc = `jsv (JSON Scheme Viewer)
 JSON Schema viewer is a lightweight javascript library and tool that turns JSON
 schemas into elegant human-readable documents.
 
-It expects a JSON or CKAN Schema from stdin (defaults to JSON Schema) and
-outputs to stdout its version for visualization in MarkDown (unless another
+It expects a JSON or CKAN Schema (defaults to JSON Schema) from stdin, or a
+path to a file with that content.
+
+It outputs to stdout its version for visualization in MarkDown (unless another
 format is passed using --output). Alternatively, a custom Jinja2/Nunjucks
 template can be passed using --template.`;
 
@@ -41,8 +43,6 @@ const main = () => {
       "-t, --template <template>",
       "Template to use for rendering (overrides --output)"
     )
-    .option("-t, --template <template>", "Template to use for rendering")
-    .option("-f, --file <file>", "Read an existing JSON file")
     .action((json, options) => run(stdin || json, options));
 
   // input is available right away

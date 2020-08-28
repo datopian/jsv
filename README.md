@@ -36,8 +36,10 @@ jsv (JSON Scheme Viewer)
 JSON Schema viewer is a lightweight javascript library and tool that turns JSON
 schemas into elegant human-readable documents.
 
-It expects a JSON or CKAN Schema from stdin (defaults to JSON Schema) and
-outputs to stdout its version for visualization in MarkDown (unless another
+It expects a JSON or CKAN Schema (defaults to JSON Schema) from stdin, or a
+path to a file with that content.
+
+It outputs to stdout its version for visualization in MarkDown (unless another
 format is passed using --output). Alternatively, a custom Jinja2/Nunjucks
 template can be passed using --template.
 
@@ -53,10 +55,10 @@ Options:
 
 ### Examples
 
-#### Piping with a local file
+#### From a local file
 
 ```console
-$ cat test/fixtures/data-resource.json | jsv
+$ jsv test/fixtures/data-resource.json
 # Data Resource
 
 **(`object`)**
@@ -133,7 +135,7 @@ $ cat test/fixtures/ckan-schema.json | jsv --input ckan
 #### Converting from CKAN Schema to JSON Schema
 
 ```console
-$ cat test/fixtures/ckan-schema.json | jsv --input ckan --output json
+$ jsv --input ckan --output json test/fixtures/ckan-schema.json
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "BMGF's special metadatas",
@@ -165,21 +167,23 @@ Check the [custom templates section](#custom-templates) for more details.
 
 ## API
 
-The `engine` async function expects the JSON Schema and a format, both as _string_. It returns the converted contents also as _string_.
+The `engine` async function expects the first argument to be:
+
+- a JSON Schema string
+- a path to a file containing a JSON Schema
+- (with the `--input ckan` flag) a CKAN Schema string
+- (with the `--input ckan` flag) a path to a file containing a CKAN Schema
+
+And the secont argument should be an object with `input`, `output` or `template` — as described in the CLI help.
 
 ### Examples
 
-To convert a given JSON schema from a file, we need to read the content of the input file pass it to the `engine`:
+To convert a given JSON schema from a file:
 
 ```javascript
-import fs from "fs";
 import { engine } from "jsv";
 
-fs.promises
-  .readFile("schema.json", "utf8")
-  .then((data) =>
-    engine(data, { input: "json", output: "md" }).then(console.log)
-  );
+engine("schema.json", { input: "json", output: "md" }).then(console.log);
 ```
 
 Also you can use a [custom template](#custom-templates):
@@ -191,7 +195,7 @@ engine(data, { template: "path/to/custom/template.r" });
 And convert from CKAN to JSON Schema on the fly:
 
 ```javascript
-engine(data, { input: "ckan", output: "json" }).then(console.log);
+engine(data, { input: "ckan", output: "json" });
 ```
 
 ## Custom templates

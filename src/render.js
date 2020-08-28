@@ -6,7 +6,7 @@ import {
   toHtml,
   toJson,
   toMarkDown,
-  toPython
+  toPython,
 } from "./engines.js";
 
 const engines = { html: toHtml, json: toJson, md: toMarkDown, py: toPython };
@@ -35,12 +35,18 @@ const validateOptions = ({ input = null, output = null, template = null }) => {
   }
 };
 
-const validateJson = input => {
+const validateJson = (input) => {
   let schema = {};
+  if (fs.existsSync(input)) {
+    return validateJson(fs.readFileSync(input));
+  }
+
   try {
     schema = JSON.parse(input);
   } catch (err) {
-    throw new Error(`Invalid JSON input.\n${err}`);
+    throw new Error(
+      `Path points to a non-existent file, or it is an invalid JSON input.\n${err}`
+    );
   }
   return schema;
 };
@@ -48,18 +54,9 @@ const validateJson = input => {
 // helper function to switch between different rendering engines/formats
 const engine = async (
   content,
-  { input = null, output = null, template = null, file = null } = {}
+  { input = null, output = null, template = null } = {}
 ) => {
-  validateOptions({
-    input: input,
-    output: output,
-    template: template,
-    file: file
-  });
-
-  if (file !== null && fs.existsSync(file)) {
-    content = fs.readFileSync(file);
-  }
+  validateOptions({ input: input, output: output, template: template });
   let schema = validateJson(content);
   if (input === "ckan") {
     schema = ckanToJsonSchema(schema);

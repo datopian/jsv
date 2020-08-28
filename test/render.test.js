@@ -62,6 +62,15 @@ test("Can render a CKAN schema to MarkDown", async (t) => {
     );
 });
 
+test("Can read from a JSON file", async (t) => {
+  const expected = await readFixture("data-resource.md");
+  engine("./test/fixtures/data-resource.json", { input: "json", output: "md" })
+    .then((result) => t.is(result, expected))
+    .catch((error) =>
+      t.fail(`Expected to render with no errors, but got:${showError(error)}`)
+    );
+});
+
 test("Can render using a custom template", async (t) => {
   const input = await readFixture("data-resource.json");
   const expected = await readFixture("custom-template-output.md");
@@ -77,7 +86,19 @@ test("Engine throws an error when JSON is invalid", async (t) => {
   engine(input, { output: "md" })
     .then(() => t.fail("Expected JSON validation error."))
     .catch((error) => {
-      const expected = "Invalid JSON input.";
+      const expected =
+        "Path points to a non-existent file, or it is an invalid JSON input.";
+      const result = error.message.substr(0, expected.length);
+      t.is(result, expected);
+    });
+});
+
+test("Engine throws an error when file path is invalid", async (t) => {
+  engine("this-should-not-exist.json", { input: "json", output: "md" })
+    .then(() => t.fail("Expected JSON validation error."))
+    .catch((error) => {
+      const expected =
+        "Path points to a non-existent file, or it is an invalid JSON input.";
       const result = error.message.substr(0, expected.length);
       t.is(result, expected);
     });
@@ -149,15 +170,4 @@ test("Engine throws an error when both input and output are JSON", async (t) => 
         "Input and output set to JSON, no transformation needed."
       );
     });
-});
-
-test("Can read a JSON file with --file flag", async (t) => {
-  const file = "./test/fixtures/data-resource.json";
-  const expected = await readFixture("data-resource.md");
-  const input = null;
-  engine(input, { input: "json", file: file, output: "md" })
-    .then((result) => t.is(result, expected))
-    .catch((error) =>
-      t.fail(`Expected to render with no errors, but got:${showError(error)}`)
-    );
 });
