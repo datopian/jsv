@@ -150,3 +150,14 @@ test("Engine throws an error when both input and output are JSON", async (t) => 
       );
     });
 });
+
+test("Can read a JSON file with --file flag", async (t) => {
+  const file = "./test/fixtures/data-resource.json";
+  const expected = await readFixture("data-resource.md");
+  const input = null;
+  engine(input, { input: "json", file: file, output: "md" })
+    .then((result) => t.is(result, expected))
+    .catch((error) =>
+      t.fail(`Expected to render with no errors, but got:${showError(error)}`)
+    );
+});

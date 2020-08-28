@@ -41,6 +41,8 @@ const main = () => {
       "-t, --template <template>",
       "Template to use for rendering (overrides --output)"
     )
+    .option("-t, --template <template>", "Template to use for rendering")
+    .option("-f, --file <file>", "Read an existing JSON file")
     .action((json, options) => run(stdin || json, options));
 
   // input is available right away

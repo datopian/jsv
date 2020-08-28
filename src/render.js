@@ -6,7 +6,7 @@ import {
   toHtml,
   toJson,
   toMarkDown,
-  toPython,
+  toPython
 } from "./engines.js";
 
 const engines = { html: toHtml, json: toJson, md: toMarkDown, py: toPython };
@@ -35,7 +35,7 @@ const validateOptions = ({ input = null, output = null, template = null }) => {
   }
 };
 
-const validateJson = (input) => {
+const validateJson = input => {
   let schema = {};
   try {
     schema = JSON.parse(input);
@@ -48,10 +48,18 @@ const validateJson = (input) => {
 // helper function to switch between different rendering engines/formats
 const engine = async (
   content,
-  { input = null, output = null, template = null } = {}
+  { input = null, output = null, template = null, file = null } = {}
 ) => {
-  validateOptions({ input: input, output: output, template: template });
+  validateOptions({
+    input: input,
+    output: output,
+    template: template,
+    file: file
+  });
 
+  if (file !== null && fs.existsSync(file)) {
+    content = fs.readFileSync(file);
+  }
   let schema = validateJson(content);
   if (input === "ckan") {
     schema = ckanToJsonSchema(schema);
@@ -60,6 +68,7 @@ const engine = async (
   if (output !== null) {
     return engines[output](schema);
   }
+
   if (template !== null) {
     return templateEngine(schema, { template: template });
   }
