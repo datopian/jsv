@@ -42,6 +42,35 @@ test("Can render a JSON schema to Python", async (t) => {
     );
 });
 
+test("Can render a CKAN schema to JSON", async (t) => {
+  const input = await readFixture("ckan-schema.json");
+  const expected = await readFixture("ckan-schema-as-json-schema.json");
+  engine(input, { input: "ckan", output: "json" })
+    .then((result) => t.is(result, expected))
+    .catch((error) =>
+      t.fail(`Expected to render with no errors, but got:${showError(error)}`)
+    );
+});
+
+test("Can render a CKAN schema to MarkDown", async (t) => {
+  const input = await readFixture("ckan-schema.json");
+  const expected = await readFixture("ckan-schema.md");
+  engine(input, { input: "ckan", output: "md" })
+    .then((result) => t.is(result, expected))
+    .catch((error) =>
+      t.fail(`Expected to render with no errors, but got:${showError(error)}`)
+    );
+});
+
+test("Can read from a JSON file", async (t) => {
+  const expected = await readFixture("data-resource.md");
+  engine("./test/fixtures/data-resource.json", { input: "json", output: "md" })
+    .then((result) => t.is(result, expected))
+    .catch((error) =>
+      t.fail(`Expected to render with no errors, but got:${showError(error)}`)
+    );
+});
+
 test("Can render using a custom template", async (t) => {
   const input = await readFixture("data-resource.json");
   const expected = await readFixture("custom-template-output.md");
@@ -57,7 +86,19 @@ test("Engine throws an error when JSON is invalid", async (t) => {
   engine(input, { output: "md" })
     .then(() => t.fail("Expected JSON validation error."))
     .catch((error) => {
-      const expected = "Invalid JSON input.";
+      const expected =
+        "Path points to a non-existent file, or it is an invalid JSON input.";
+      const result = error.message.substr(0, expected.length);
+      t.is(result, expected);
+    });
+});
+
+test("Engine throws an error when file path is invalid", async (t) => {
+  engine("this-should-not-exist.json", { input: "json", output: "md" })
+    .then(() => t.fail("Expected JSON validation error."))
+    .catch((error) => {
+      const expected =
+        "Path points to a non-existent file, or it is an invalid JSON input.";
       const result = error.message.substr(0, expected.length);
       t.is(result, expected);
     });
@@ -67,7 +108,7 @@ test("Engine throws an error when output format is invalid", async (t) => {
   engine("sample input", { output: "go" })
     .then(() => t.fail("Expected a output format validation error."))
     .catch((error) => {
-      const expected = "go is not valid. Options are: html, md, py.";
+      const expected = "go is not valid. Options are: html, json, md, py.";
       const result = error.message.substr(0, expected.length);
       t.is(result, expected);
     });
@@ -116,6 +157,17 @@ test("Engine throws an error when it has both output and template", async (t) =>
       t.is(
         error.message,
         "The engine needs an output or a template (not both)."
+      );
+    });
+});
+
+test("Engine throws an error when both input and output are JSON", async (t) => {
+  engine("sample input", { output: "json", input: "json" })
+    .then(() => t.fail("Expected a validation error."))
+    .catch((error) => {
+      t.is(
+        error.message,
+        "Input and output set to JSON, no transformation needed."
       );
     });
 });
