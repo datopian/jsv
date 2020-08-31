@@ -17,7 +17,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "ava",
+    "test": "nyc ava",
     "posttest": "prettier --check ."
   },
   "bin": {
@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "ava": "^3.11.1",
+    "nyc": "^15.1.0",
     "prettier": "^2.0.5"
   },
   "dependencies": {
