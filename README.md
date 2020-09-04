@@ -47,8 +47,8 @@ Options:
   -V, --version              output the version number
   -i, --input <format>       Format of the input: json for JSON Schema, ckan
                              for CKAN Schema (default: "json")
-  -o, --output <format>      Format of the output: html, json, md, py (default:
-                             "md")
+  -o, --output <format>      Format of the output: html, json, md, py, r
+                             (default: "md")
   -t, --template <template>  Template to use for rendering (overrides --output)
   -h, --help                 display help for command
 ```
@@ -114,6 +114,21 @@ dataset_metadata = {
     # [example] "profile": "http://example.com/my-profiles-json-schema.json"
     "name": "my-nice-name",  # An identifier string. Lower case characters with `.`, `_`, `-` and `/` are allowed.
     "path": ["file.csv","file2.csv"],  # A reference to the data for this resource, as either a path as a string, or an array of paths as strings. of valid URIs.
+…
+```
+
+#### Exporting to R
+
+```console
+$ jsv --output r test/fixtures/data-resource.json
+# The profile of this descriptor.
+profile <- "data-resource"
+# [example] profile <- "tabular-data-package"
+# [example] profile <- "http://example.com/my-profiles-json-schema.json"
+# An identifier string. Lower case characters with `.`, `_`, `-` and `/` are allowed.
+name <- "my-nice-name"
+# A reference to the data for this resource, as either a path as a string, or an array of paths as strings. of valid URIs.
+path <- ["file.csv","file2.csv"]
 …
 ```
 
@@ -255,6 +270,10 @@ A shorcut to JavaScript's native `JSON.parse`. Useful to parse strings that cont
 ### `stringify`
 
 A shorcut to JavaScript's native `JSON.stringify`. Useful to parse JavaScript objects as strings in a template..
+
+### `stringifyToR`
+
+The same as [`stringify`](#stringify), but adds a leading `L` to integers and replaces `null` and `undefined` by `NA`.
 
 ## Tests
 
