@@ -4,6 +4,7 @@ import { ckanToJsonSchema } from "./ckan.js";
 import {
   templateEngine,
   toHtml,
+  toJavaScript,
   toJson,
   toMarkDown,
   toPython,
@@ -12,6 +13,7 @@ import {
 
 const engines = {
   html: toHtml,
+  js: toJavaScript,
   json: toJson,
   md: toMarkDown,
   py: toPython,

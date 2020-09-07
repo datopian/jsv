@@ -56,8 +56,11 @@ const templateEngine = (
   if (output === "md") {
     postRender.push(removeExtraEmptyLines);
   }
-  if (output === "py" || output === "r") {
+  if (output === "js" || output === "py" || output === "r") {
     postRender.push(removeEmptyLines);
+  }
+  if (output === "js") {
+    postRender.push((result) => prettier.format(result, { parser: "babel" }));
   }
 
   // run post-render functions
@@ -77,7 +80,16 @@ const toMarkDown = (schema) => templateEngine(schema);
 const toHtml = (schema) => templateEngine(schema, { postRender: md2html });
 const toPython = (schema) => templateEngine(schema, { output: "py" });
 const toR = (schema) => templateEngine(schema, { output: "r" });
+const toJavaScript = (schema) => templateEngine(schema, { output: "js" });
 const toJson = (schema) =>
   prettier.format(JSON.stringify(schema), { parser: "json" });
 
-export { templateEngine, toHtml, toJson, toMarkDown, toPython, toR };
+export {
+  templateEngine,
+  toHtml,
+  toJavaScript,
+  toJson,
+  toMarkDown,
+  toPython,
+  toR,
+};
