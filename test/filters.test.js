@@ -1,6 +1,11 @@
 import test from "ava";
 
-import { cleanExample, getDefault, getDescription } from "../src/filters.js";
+import {
+  cleanExample,
+  getDefault,
+  getDescription,
+  stringifyToR,
+} from "../src/filters.js";
 
 test("cleanExample can show the value without the key", (t) => {
   const input = '{ "example": 42 }';
@@ -35,4 +40,17 @@ test("getDescription falls back to name when description does not exist", (t) =>
 test("getDescription returns null when nothing is found ", (t) => {
   const input = {};
   t.is(getDescription(input), null);
+});
+
+test("stringifyToR does not change text", (t) => {
+  t.is(stringifyToR("answer"), '"answer"');
+});
+
+test("stringifyToR adds L to integer numbers", (t) => {
+  t.is(stringifyToR(42), "42L");
+});
+
+test("stringifyToR replaces null and undefined by NA", (t) => {
+  t.is(stringifyToR(null), "NA");
+  t.is(stringifyToR(undefined), "NA");
 });

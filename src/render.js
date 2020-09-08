@@ -4,12 +4,21 @@ import { ckanToJsonSchema } from "./ckan.js";
 import {
   templateEngine,
   toHtml,
+  toJavaScript,
   toJson,
   toMarkDown,
   toPython,
+  toR,
 } from "./engines.js";
 
-const engines = { html: toHtml, json: toJson, md: toMarkDown, py: toPython };
+const engines = {
+  html: toHtml,
+  js: toJavaScript,
+  json: toJson,
+  md: toMarkDown,
+  py: toPython,
+  r: toR,
+};
 const available = Object.keys(engines).join(", ");
 
 // helper function to validade engine's options

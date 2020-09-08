@@ -28,4 +28,14 @@ const getDefault = (obj) => {
 
 const getDescription = (obj) => obj.description || obj.name || null;
 
-export { cleanExample, getDefault, getDescription };
+const stringifyToR = (obj) => {
+  const str = JSON.stringify(obj);
+  if (typeof str === "string" && str.match(/^\d+$/)) {
+    return `${str}L`;
+  } else if (obj === null || obj === undefined) {
+    return "NA";
+  }
+  return str;
+};
+
+export { cleanExample, getDefault, getDescription, stringifyToR };

@@ -6,7 +6,12 @@ import nunjucks from "nunjucks";
 import prettier from "prettier";
 import showdown from "showdown";
 
-import { cleanExample, getDefault, getDescription } from "../src/filters.js";
+import {
+  cleanExample,
+  getDefault,
+  getDescription,
+  stringifyToR,
+} from "../src/filters.js";
 import { removeEmptyLines, removeExtraEmptyLines } from "./text.js";
 
 const getRenderer = (template = null, output = null) => {
@@ -30,6 +35,7 @@ const getRenderer = (template = null, output = null) => {
   env.addFilter("getDescription", getDescription);
   env.addFilter("parseJson", JSON.parse);
   env.addFilter("stringify", JSON.stringify);
+  env.addFilter("stringifyToR", stringifyToR);
 
   return (schema) => env.render(templateName, schema);
 };
@@ -50,8 +56,11 @@ const templateEngine = (
   if (output === "md") {
     postRender.push(removeExtraEmptyLines);
   }
-  if (output === "py") {
+  if (output === "js" || output === "py" || output === "r") {
     postRender.push(removeEmptyLines);
+  }
+  if (output === "js") {
+    postRender.push((result) => prettier.format(result, { parser: "babel" }));
   }
 
   // run post-render functions
@@ -70,7 +79,17 @@ const md2html = (md) => {
 const toMarkDown = (schema) => templateEngine(schema);
 const toHtml = (schema) => templateEngine(schema, { postRender: md2html });
 const toPython = (schema) => templateEngine(schema, { output: "py" });
+const toR = (schema) => templateEngine(schema, { output: "r" });
+const toJavaScript = (schema) => templateEngine(schema, { output: "js" });
 const toJson = (schema) =>
   prettier.format(JSON.stringify(schema), { parser: "json" });
 
-export { templateEngine, toHtml, toJson, toMarkDown, toPython };
+export {
+  templateEngine,
+  toHtml,
+  toJavaScript,
+  toJson,
+  toMarkDown,
+  toPython,
+  toR,
+};

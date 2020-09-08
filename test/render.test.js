@@ -42,6 +42,16 @@ test("Can render a JSON schema to Python", async (t) => {
     );
 });
 
+test("Can render a JSON schema to R", async (t) => {
+  const input = await readFixture("data-resource.json");
+  const expected = await readFixture("data-resource.r");
+  engine(input, { output: "r" })
+    .then((result) => t.is(result, expected))
+    .catch((error) =>
+      t.fail(`Expected to render with no errors, but got:${showError(error)}`)
+    );
+});
+
 test("Can render a CKAN schema to JSON", async (t) => {
   const input = await readFixture("ckan-schema.json");
   const expected = await readFixture("ckan-schema-as-json-schema.json");
@@ -65,6 +75,16 @@ test("Can render a CKAN schema to MarkDown", async (t) => {
 test("Can read from a JSON file", async (t) => {
   const expected = await readFixture("data-resource.md");
   engine("./test/fixtures/data-resource.json", { input: "json", output: "md" })
+    .then((result) => t.is(result, expected))
+    .catch((error) =>
+      t.fail(`Expected to render with no errors, but got:${showError(error)}`)
+    );
+});
+
+test("Can render a CKAN schema to JavaScript", async (t) => {
+  const input = await readFixture("data-resource.json");
+  const expected = await readFixture("data-resource.js");
+  engine(input, { output: "js" })
     .then((result) => t.is(result, expected))
     .catch((error) =>
       t.fail(`Expected to render with no errors, but got:${showError(error)}`)
@@ -108,7 +128,8 @@ test("Engine throws an error when output format is invalid", async (t) => {
   engine("sample input", { output: "go" })
     .then(() => t.fail("Expected a output format validation error."))
     .catch((error) => {
-      const expected = "go is not valid. Options are: html, json, md, py.";
+      const expected =
+        "go is not valid. Options are: html, js, json, md, py, r.";
       const result = error.message.substr(0, expected.length);
       t.is(result, expected);
     });
